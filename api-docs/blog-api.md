@@ -5,6 +5,10 @@ description: Pysio Home 博客的所有API
 
 # Blog API
 
+{% hint style="warning" %}
+&#x20;API密钥仅对博客管理者提供，尽情谅解
+{% endhint %}
+
 {% openapi src="../.gitbook/assets/openapi_blog.json" path="/" method="get" %}
 [openapi_blog.json](../.gitbook/assets/openapi_blog.json)
 {% endopenapi %}
