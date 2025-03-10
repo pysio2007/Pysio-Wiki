@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Pysio Wiki](README.md)
+* [首页](README.md)
 
 ## 美术文件 <a href="#art-files" id="art-files"></a>
 
