@@ -10,3 +10,4 @@
 
 * [Blog API](api-docs/blog-api.md)
 * [File API](api-docs/file-api.md)
+* [Whois API](api-docs/whois-api.md)

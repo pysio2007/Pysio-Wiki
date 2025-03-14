@@ -1,0 +1,778 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "WHOIS查询API",
+    "description": "提供IP地址、ASN和域名的WHOIS查询服务",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API支持",
+      "email": "support@example.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://whois.akaere.online",
+      "description": "生产环境API服务器"
+    }
+  ],
+  "paths": {
+    "/ip/{ip}": {
+      "get": {
+        "summary": "IP WHOIS查询",
+        "description": "根据IP地址查询WHOIS信息",
+        "operationId": "getIpWhois",
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "path",
+            "description": "要查询的IP地址",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "193.0.0.1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "handle": "193.0.0.0 - 193.0.7.255",
+                    "startAddress": "193.0.0.0",
+                    "endAddress": "193.0.7.255",
+                    "ipVersion": "v4",
+                    "name": "RIPE-NCC",
+                    "type": "ALLOCATED",
+                    "country": "NL",
+                    "parentHandle": "193.0.0.0/8",
+                    "entities": [
+                      {
+                        "handle": "ORG-RIPE1-RIPE",
+                        "vcardArray": [
+                          "vcard",
+                          [
+                            ["version", {}, "text", "4.0"],
+                            ["fn", {}, "text", "RIPE Network Coordination Centre"]
+                          ]
+                        ],
+                        "roles": ["registrant"]
+                      }
+                    ],
+                    "events": [
+                      {
+                        "eventAction": "last changed",
+                        "eventDate": "2019-11-01T13:10:51Z"
+                      },
+                      {
+                        "eventAction": "registration",
+                        "eventDate": "1993-05-01T00:00:00Z"
+                      }
+                    ],
+                    "links": [
+                      {
+                        "value": "https://rdap.db.ripe.net/ip/193.0.0.0/21",
+                        "rel": "self",
+                        "href": "https://rdap.db.ripe.net/ip/193.0.0.0/21",
+                        "type": "application/rdap+json"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "无效请求",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "无效的API路径，请使用 /ip/{IP地址} 或 /asn/{ASN编号} 或 /domain/{域名}",
+                  "status": 400
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "未找到",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "查询失败",
+                  "details": {
+                    "errorCode": 404,
+                    "title": "Not Found",
+                    "description": "The requested resource was not found"
+                  },
+                  "status": 404
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "查询失败",
+                  "message": "Internal server error",
+                  "status": 500
+                }
+              }
+            }
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS预检请求",
+        "description": "处理CORS预检请求",
+        "operationId": "ipWhoisOptions",
+        "responses": {
+          "200": {
+            "description": "CORS预检成功响应",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET, OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/asn/{asn}": {
+      "get": {
+        "summary": "ASN查询",
+        "description": "根据ASN编号查询信息",
+        "operationId": "getAsnInfo",
+        "parameters": [
+          {
+            "name": "asn",
+            "in": "path",
+            "description": "要查询的ASN编号，可以包含或不包含'AS'前缀",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "AS3333"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "handle": "3333",
+                    "startAutnum": 3333,
+                    "endAutnum": 3333,
+                    "name": "RIPE-NCC-AS",
+                    "type": "ALLOCATED",
+                    "status": ["active"],
+                    "country": "NL",
+                    "entities": [
+                      {
+                        "handle": "ORG-RIPE1-RIPE",
+                        "vcardArray": [
+                          "vcard",
+                          [
+                            ["version", {}, "text", "4.0"],
+                            ["fn", {}, "text", "RIPE Network Coordination Centre"]
+                          ]
+                        ],
+                        "roles": ["registrant"]
+                      }
+                    ],
+                    "events": [
+                      {
+                        "eventAction": "last changed",
+                        "eventDate": "2019-11-01T13:10:51Z"
+                      },
+                      {
+                        "eventAction": "registration",
+                        "eventDate": "1993-05-01T00:00:00Z"
+                      }
+                    ],
+                    "links": [
+                      {
+                        "value": "https://rdap.db.ripe.net/autnum/3333",
+                        "rel": "self",
+                        "href": "https://rdap.db.ripe.net/autnum/3333",
+                        "type": "application/rdap+json"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "无效请求",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "未找到",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS预检请求",
+        "description": "处理CORS预检请求",
+        "operationId": "asnInfoOptions",
+        "responses": {
+          "200": {
+            "description": "CORS预检成功响应",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET, OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/domain/{domain}": {
+      "get": {
+        "summary": "域名WHOIS查询",
+        "description": "根据域名查询WHOIS信息",
+        "operationId": "getDomainWhois",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "path",
+            "description": "要查询的域名",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "example.com"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "domainName": "example.com",
+                    "status": ["clientTransferProhibited", "serverDeleteProhibited", "serverTransferProhibited", "serverUpdateProhibited"],
+                    "registrar": "Internet Corporation for Assigned Names and Numbers",
+                    "createdDate": "1995-08-14T04:00:00Z",
+                    "updatedDate": "2021-08-14T07:01:44Z",
+                    "expiryDate": "2022-08-13T04:00:00Z",
+                    "nameServers": [
+                      "a.iana-servers.net",
+                      "b.iana-servers.net"
+                    ],
+                    "raw": {
+                      "ldhName": "example.com",
+                      "unicodeName": "example.com",
+                      "status": ["clientTransferProhibited", "serverDeleteProhibited", "serverTransferProhibited", "serverUpdateProhibited"],
+                      "entities": [
+                        {
+                          "handle": "IANA",
+                          "roles": ["registrar"],
+                          "vcardArray": [
+                            "vcard",
+                            [
+                              ["version", {}, "text", "4.0"],
+                              ["fn", {}, "text", "Internet Corporation for Assigned Names and Numbers"]
+                            ]
+                          ]
+                        }
+                      ],
+                      "events": [
+                        {
+                          "eventAction": "registration",
+                          "eventDate": "1995-08-14T04:00:00Z"
+                        },
+                        {
+                          "eventAction": "last changed",
+                          "eventDate": "2021-08-14T07:01:44Z"
+                        },
+                        {
+                          "eventAction": "expiration",
+                          "eventDate": "2022-08-13T04:00:00Z"
+                        }
+                      ],
+                      "nameservers": [
+                        {
+                          "ldhName": "a.iana-servers.net"
+                        },
+                        {
+                          "ldhName": "b.iana-servers.net"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "无效请求",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "未找到",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "服务器错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS预检请求",
+        "description": "处理CORS预检请求",
+        "operationId": "domainWhoisOptions",
+        "responses": {
+          "200": {
+            "description": "CORS预检成功响应",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET, OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SuccessResponse": {
+        "type": "object",
+        "required": ["success", "data"],
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "表示请求是否成功",
+            "example": true
+          },
+          "data": {
+            "type": "object",
+            "description": "查询结果数据",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/IpWhoisData"
+              },
+              {
+                "$ref": "#/components/schemas/AsnData"
+              },
+              {
+                "$ref": "#/components/schemas/DomainWhoisData"
+              }
+            ]
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "错误消息",
+            "example": "查询失败"
+          },
+          "message": {
+            "type": "string",
+            "description": "详细错误信息",
+            "example": "无法连接到WHOIS服务器"
+          },
+          "details": {
+            "type": "object",
+            "description": "错误详情",
+            "example": {
+              "errorCode": 404,
+              "title": "Not Found",
+              "description": "The requested resource was not found"
+            }
+          },
+          "status": {
+            "type": "integer",
+            "description": "HTTP状态码",
+            "example": 400
+          }
+        }
+      },
+      "IpWhoisData": {
+        "type": "object",
+        "description": "IP WHOIS查询结果",
+        "properties": {
+          "handle": {
+            "type": "string",
+            "description": "IP范围标识符",
+            "example": "193.0.0.0 - 193.0.7.255"
+          },
+          "startAddress": {
+            "type": "string",
+            "description": "IP范围起始地址",
+            "example": "193.0.0.0"
+          },
+          "endAddress": {
+            "type": "string",
+            "description": "IP范围结束地址",
+            "example": "193.0.7.255"
+          },
+          "ipVersion": {
+            "type": "string",
+            "description": "IP版本",
+            "enum": ["v4", "v6"],
+            "example": "v4"
+          },
+          "name": {
+            "type": "string",
+            "description": "网络名称",
+            "example": "RIPE-NCC"
+          },
+          "type": {
+            "type": "string",
+            "description": "分配类型",
+            "example": "ALLOCATED"
+          },
+          "country": {
+            "type": "string",
+            "description": "国家/地区代码",
+            "example": "NL"
+          },
+          "parentHandle": {
+            "type": "string",
+            "description": "父级IP范围标识符",
+            "example": "193.0.0.0/8"
+          },
+          "entities": {
+            "type": "array",
+            "description": "相关实体信息",
+            "items": {
+              "$ref": "#/components/schemas/Entity"
+            }
+          },
+          "events": {
+            "type": "array",
+            "description": "事件信息",
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            }
+          },
+          "links": {
+            "type": "array",
+            "description": "相关链接",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            }
+          }
+        }
+      },
+      "AsnData": {
+        "type": "object",
+        "description": "ASN查询结果",
+        "properties": {
+          "handle": {
+            "type": "string",
+            "description": "ASN标识符",
+            "example": "3333"
+          },
+          "startAutnum": {
+            "type": "integer",
+            "description": "ASN范围起始值",
+            "example": 3333
+          },
+          "endAutnum": {
+            "type": "integer",
+            "description": "ASN范围结束值",
+            "example": 3333
+          },
+          "name": {
+            "type": "string",
+            "description": "ASN名称",
+            "example": "RIPE-NCC-AS"
+          },
+          "type": {
+            "type": "string",
+            "description": "分配类型",
+            "example": "ALLOCATED"
+          },
+          "status": {
+            "type": "array",
+            "description": "状态",
+            "items": {
+              "type": "string"
+            },
+            "example": ["active"]
+          },
+          "country": {
+            "type": "string",
+            "description": "国家/地区代码",
+            "example": "NL"
+          },
+          "entities": {
+            "type": "array",
+            "description": "相关实体信息",
+            "items": {
+              "$ref": "#/components/schemas/Entity"
+            }
+          },
+          "events": {
+            "type": "array",
+            "description": "事件信息",
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            }
+          },
+          "links": {
+            "type": "array",
+            "description": "相关链接",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            }
+          }
+        }
+      },
+      "DomainWhoisData": {
+        "type": "object",
+        "description": "域名WHOIS查询结果",
+        "required": ["domainName"],
+        "properties": {
+          "domainName": {
+            "type": "string",
+            "description": "域名",
+            "example": "example.com"
+          },
+          "status": {
+            "type": "array",
+            "description": "域名状态",
+            "items": {
+              "type": "string"
+            },
+            "example": ["clientTransferProhibited", "serverDeleteProhibited"]
+          },
+          "registrar": {
+            "type": "string",
+            "description": "注册商",
+            "example": "Internet Corporation for Assigned Names and Numbers"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "创建日期",
+            "format": "date-time",
+            "example": "1995-08-14T04:00:00Z"
+          },
+          "updatedDate": {
+            "type": "string",
+            "description": "更新日期",
+            "format": "date-time",
+            "example": "2021-08-14T07:01:44Z"
+          },
+          "expiryDate": {
+            "type": "string",
+            "description": "过期日期",
+            "format": "date-time",
+            "example": "2022-08-13T04:00:00Z"
+          },
+          "nameServers": {
+            "type": "array",
+            "description": "域名服务器",
+            "items": {
+              "type": "string"
+            },
+            "example": ["a.iana-servers.net", "b.iana-servers.net"]
+          },
+          "raw": {
+            "type": "object",
+            "description": "原始RDAP/WHOIS数据",
+            "additionalProperties": true
+          }
+        }
+      },
+      "Entity": {
+        "type": "object",
+        "description": "实体信息",
+        "properties": {
+          "handle": {
+            "type": "string",
+            "description": "实体标识符",
+            "example": "ORG-RIPE1-RIPE"
+          },
+          "vcardArray": {
+            "type": "array",
+            "description": "vCard格式的联系信息",
+            "items": {
+              "type": "array"
+            },
+            "example": [
+              "vcard",
+              [
+                ["version", {}, "text", "4.0"],
+                ["fn", {}, "text", "RIPE Network Coordination Centre"]
+              ]
+            ]
+          },
+          "roles": {
+            "type": "array",
+            "description": "实体角色",
+            "items": {
+              "type": "string"
+            },
+            "example": ["registrant"]
+          }
+        }
+      },
+      "Event": {
+        "type": "object",
+        "description": "事件信息",
+        "properties": {
+          "eventAction": {
+            "type": "string",
+            "description": "事件类型",
+            "example": "registration"
+          },
+          "eventDate": {
+            "type": "string",
+            "description": "事件日期",
+            "format": "date-time",
+            "example": "1993-05-01T00:00:00Z"
+          }
+        }
+      },
+      "Link": {
+        "type": "object",
+        "description": "链接信息",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "链接值",
+            "example": "https://rdap.db.ripe.net/ip/193.0.0.0/21"
+          },
+          "rel": {
+            "type": "string",
+            "description": "关系类型",
+            "example": "self"
+          },
+          "href": {
+            "type": "string",
+            "description": "超链接引用",
+            "example": "https://rdap.db.ripe.net/ip/193.0.0.0/21"
+          },
+          "type": {
+            "type": "string",
+            "description": "媒体类型",
+            "example": "application/rdap+json"
+          }
+        }
+      }
+    }
+  }
+} 
