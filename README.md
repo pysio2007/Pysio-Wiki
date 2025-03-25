@@ -18,3 +18,6 @@
 [file-api.md](api-docs/file-api.md)
 {% endcontent-ref %}
 
+{% content-ref url="api-docs/whois-api.md" %}
+[whois-api.md](api-docs/whois-api.md)
+{% endcontent-ref %}
