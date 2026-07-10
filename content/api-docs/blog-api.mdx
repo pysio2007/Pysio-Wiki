@@ -1,0 +1,21 @@
+---
+title: Blog API
+description: Pysio Home 博客的 API 接口
+---
+
+import { Callout } from 'nextra/components'
+import { OpenApiReference } from '@/components/openapi/open-api-reference'
+import { blogApiOperations } from '@/config/openapi-operation-order'
+import spec from '@/public/openapi/blog-api.json'
+
+# Blog API
+
+<Callout type="warning">
+  API 密钥仅向博客管理员提供，敬请谅解。
+</Callout>
+
+<OpenApiReference
+  document={spec}
+  operations={blogApiOperations}
+  specUrl="/openapi/blog-api.json"
+/>

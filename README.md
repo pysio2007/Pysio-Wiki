@@ -1,23 +1,18 @@
-# 首页
+# Pysio Wiki
 
-欢迎光临 Pysio 的 Wiki 喵～这里收集了本喵所有的 API 接口文档、美术资源和其他有趣的东西～希望能帮到你喵～
+基于 [Nextra](https://nextra.site/) 的 Pysio 文档站，使用 Bun 管理依赖。
 
-### 美术资源
+## 本地开发
 
-{% content-ref url="art-files/chibi-emoji.md" %}
-[chibi-emoji.md](art-files/chibi-emoji.md)
-{% endcontent-ref %}
+```bash
+bun install
+bun dev
+```
 
-### API 文档
+## 验证与构建
 
-{% content-ref url="api-docs/blog-api.md" %}
-[blog-api.md](api-docs/blog-api.md)
-{% endcontent-ref %}
+```bash
+bun run check
+```
 
-{% content-ref url="api-docs/file-api.md" %}
-[file-api.md](api-docs/file-api.md)
-{% endcontent-ref %}
-
-{% content-ref url="api-docs/whois-api.md" %}
-[whois-api.md](api-docs/whois-api.md)
-{% endcontent-ref %}
+静态站点输出到 `out/` 目录。文档内容位于 `content/`，OpenAPI 规范位于 `public/openapi/`。

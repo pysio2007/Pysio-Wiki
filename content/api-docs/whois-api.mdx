@@ -1,0 +1,16 @@
+---
+title: Whois API
+description: IP、ASN 和域名 WHOIS 查询接口
+---
+
+import { OpenApiReference } from '@/components/openapi/open-api-reference'
+import { whoisApiOperations } from '@/config/openapi-operation-order'
+import spec from '@/public/openapi/whois-api.json'
+
+# Whois API
+
+<OpenApiReference
+  document={spec}
+  operations={whoisApiOperations}
+  specUrl="/openapi/whois-api.json"
+/>

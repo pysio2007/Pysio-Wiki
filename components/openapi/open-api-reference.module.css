@@ -1,0 +1,276 @@
+.reference {
+  --api-border: #d7dce2;
+  --api-muted: #5d6672;
+  --api-surface: #ffffff;
+  margin-top: 2rem;
+}
+
+:global(.dark) .reference {
+  --api-border: #353b43;
+  --api-muted: #a7afb9;
+  --api-surface: #181a1f;
+}
+
+.referenceHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--api-border);
+}
+
+.referenceHeader h2 {
+  margin: 0.25rem 0 0;
+  font-size: 1.5rem;
+  letter-spacing: 0;
+}
+
+.referenceHeader p {
+  margin: 0.5rem 0 0;
+  color: var(--api-muted);
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.download {
+  flex: 0 0 auto;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--api-border);
+  border-radius: 6px;
+  color: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.download:hover {
+  background: #f4f6f8;
+}
+
+:global(.dark) .download:hover {
+  background: #25282e;
+}
+
+.servers {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1.25rem 0;
+}
+
+.servers a {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  color: inherit;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.servers span {
+  color: var(--api-muted);
+}
+
+.operationIndex {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 0.5rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.operationIndex a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--api-border);
+  border-radius: 6px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.operationIndex a:hover {
+  border-color: #8a949f;
+}
+
+.operationIndex span,
+.method {
+  min-width: 3.5rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.operationIndex code {
+  overflow: hidden;
+  font-size: 0.75rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.operations {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.operation {
+  scroll-margin-top: 5.5rem;
+  min-width: 0;
+  max-width: 100%;
+  padding: 1.25rem;
+  border: 1px solid var(--api-border);
+  border-radius: 8px;
+  background: var(--api-surface);
+}
+
+.operationHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.path {
+  overflow-wrap: anywhere;
+  font-size: 0.875rem;
+}
+
+.operation h3 {
+  margin: 0.9rem 0 0;
+  font-size: 1.1rem;
+  letter-spacing: 0;
+}
+
+.operation > p {
+  margin: 0.5rem 0 0;
+  color: var(--api-muted);
+  line-height: 1.65;
+}
+
+.security {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.detailSection {
+  margin-top: 1.25rem;
+  min-width: 0;
+}
+
+.detailSection h4 {
+  margin: 0 0 0.65rem;
+  font-size: 0.875rem;
+  letter-spacing: 0;
+}
+
+.detailSection p {
+  margin: 0 0 0.5rem;
+  color: var(--api-muted);
+}
+
+.tableScroll {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.table th,
+.table td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--api-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  color: var(--api-muted);
+  font-weight: 700;
+}
+
+.required {
+  display: inline-block;
+  margin-left: 0.4rem;
+  color: #b42318;
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+:global(.dark) .required {
+  color: #ff8a80;
+}
+
+.contentList {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.contentType {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  color: var(--api-muted);
+}
+
+.status {
+  font-weight: 700;
+}
+
+.methodGet {
+  background: #147d64;
+}
+
+.methodPost {
+  background: #2864a8;
+}
+
+.methodPut {
+  background: #8a5a00;
+}
+
+.methodPatch {
+  background: #7651a8;
+}
+
+.methodDelete {
+  background: #b42318;
+}
+
+.methodOptions,
+.methodHead,
+.methodTrace {
+  background: #59636e;
+}
+
+@media (max-width: 640px) {
+  .referenceHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .download {
+    align-self: flex-start;
+  }
+
+  .operation {
+    padding: 1rem;
+  }
+}

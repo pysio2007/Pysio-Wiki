@@ -1,0 +1,16 @@
+---
+title: File API
+description: Pysio 文件服务 API 接口
+---
+
+import { OpenApiReference } from '@/components/openapi/open-api-reference'
+import { fileApiOperations } from '@/config/openapi-operation-order'
+import spec from '@/public/openapi/file-api.json'
+
+# File API
+
+<OpenApiReference
+  document={spec}
+  operations={fileApiOperations}
+  specUrl="/openapi/file-api.json"
+/>
